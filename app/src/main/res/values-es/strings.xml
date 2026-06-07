@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="app_name">Eventos de contactos</string>
+
+    <string name="today_contact_event_notification_text">Es su \'%1$s\', no olvides felicitarle&#8230;</string>
+    <string name="today_contact_event_with_iteration_number_notification_text">Es su \'%1$s\' (%2$d), no olvides felicitarle&#8230;</string>
+
+    <string name="app_contacts">Contactos de la app</string>
+
+    <string name="contact_stored_at">Contacto almacenado en %1$s</string>
+
+    <string name="settings">Configuración</string>
+
+    <string name="notification_channel_background_service">Servicio en segundo plano</string>
+    <string name="notification_channel_notification_event">Notificación de Evento</string>
+    <string name="running_background_tasks">Ejecutando tareas en segundo plano</string>
+
+    <string name="save">guardar</string>
+
+    <string name="enable_notifications">Notificaciones</string>
+    <string name="enable_notifications_on_summary">Notificar cuando haya contactos con algún evento próximo</string>
+    <string name="enable_notifications_off_summary">No notificar aunque haya contactos con eventos próximos</string>
+
+    <string name="not_notified_accounts_title">Cuentas que se notificarán</string>
+    <string name="not_notified_accounts_none">Se notificarán todas las cuentas</string>
+    <string name="not_notified_accounts_selected">Se notificarán todas las cuentas excepto %1$s</string>
+
+    <string name="notification_days_left">Días antes</string>
+    <string name="notify_the_same_day">Notificar el mismo día</string>
+    <string name="notification_days_left_summary">Notificar %1$d días antes</string>
+
+    <string name="notification_hour">Hora de la notificación</string>
+
+    <string name="clearable_notification">Notificación borrable</string>
+    <string name="clearable_notification_on_summary">Borrar la notificación cuando se abra la aplicación o al hacer clic en el botón de eliminar notificaciones borrables</string>
+    <string name="clearable_notification_off_summary">No borrar la notificación mientras haya eventos próximos (la notificación se borrará automáticamente)</string>
+
+    <string name="contacts_list">Lista de contactos</string>
+
+    <string name="disabled_behavior">Diferenciar Contactos inactivos</string>
+    <string name="disabled_behavior_hide_disabled">No mostrar</string>
+    <string name="disabled_behavior_gray_disabled">Mostrar en gris</string>
+    <string name="disabled_behavior_do_not_differentiate">Mostrar normalmente</string>
+
+    <string name="show_large_photo_for_contacts_that_has_events_in_the_near_future">Mostrar una foto grande para los contactos con eventos próximos</string>
+    <string name="show_large_photo_for_contacts_that_has_events_in_the_near_future_on_summary">Se mostrará una foto grande para los contactos que tengan un evento en el futuro próximo (%1$s)</string>
+    <string name="show_large_photo_for_contacts_that_has_events_in_the_near_future_off_summary">Se mostrará una foto en miniatura para todos los contactos, incluso para los que tengan un evento en el futuro próximo (%1$s)</string>
+
+    <string name="show_large_photo_for_contacts_that_do_not_has_events_in_the_near_future">Mostrar una foto grande para los contactos sin eventos próximos</string>
+    <string name="show_large_photo_for_contacts_that_do_not_has_events_in_the_near_future_on_summary">Se mostrará una foto grande para los contactos que no tengan un evento en el futuro próximo (%1$s)</string>
+    <string name="show_large_photo_for_contacts_that_do_not_has_events_in_the_near_future_off_summary">Se mostrará una foto en miniatura para los contactos que no tengan un evento en el futuro próximo (%1$s)</string>
+
+    <string name="add_header_for_today_and_tomorrow_events">Añadir cabecera para eventos de ayer, hoy y mañana</string>
+    <string name="add_header_for_today_and_tomorrow_events_on_summary">Se añadirá una cabecera especial para los eventos de ayer, hoy y mañana</string>
+    <string name="add_header_for_today_and_tomorrow_events_off_summary">Los eventos de ayer, hoy y mañana se incluirán bajo cabeceras más amplias</string>
+
+    <string name="manage_disabled_users">Gestión de contactos inactivos</string>
+    <string name="manage_disabled_users_summary">Haga clic para gestionar los contactos / eventos para los que se han desactivado las alertas</string>
+
+    <string name="group_contact_events">Agrupar eventos del contacto</string>
+    <string name="group_contact_events_on_summary">Agrupar todos los eventos de un mismo contacto y mostrar el número de días que faltan para el primero de sus eventos</string>
+    <string name="group_contact_events_off_summary">Mostrar cada evento de forma separada</string>
+
+    <string name="dismiss_until_next_year">Descartar por este año</string>
+    <string name="dismiss_until_event_date">Recordar el día exacto</string>
+
+    <string name="about">Acerca de</string>
+
+    <string name="app_version_name">Versión</string>
+    <string name="app_version_name_summary">%1$s (%2$s)</string>
+
+    <string name="github_repository">Repositorio GitHub</string>
+    <string name="github_repository_summary">Haga clic para hojear el código fuente de la app, incluída su licencia de uso</string>
+
+    <string name="accept_button">Aceptar</string>
+    <string name="cancel_button">Cancelar</string>
+
+    <string name="days">Días</string>
+
+    <string name="anniversary">Aniversario</string>
+    <string name="birthday">Cumpleaños</string>
+    <string name="zodiac_aries">Aries</string>
+    <string name="zodiac_taurus">Tauro</string>
+    <string name="zodiac_gemini">Géminis</string>
+    <string name="zodiac_cancer">Cáncer</string>
+    <string name="zodiac_leo">Leo</string>
+    <string name="zodiac_virgo">Virgo</string>
+    <string name="zodiac_libra">Libra</string>
+    <string name="zodiac_scorpio">Escorpio</string>
+    <string name="zodiac_sagittarius">Sagitario</string>
+    <string name="zodiac_capricorn">Capricornio</string>
+    <string name="zodiac_aquarius">Acuario</string>
+    <string name="zodiac_pisces">Piscis</string>
+
+    <string name="zodiac_with_date">%1$s (%2$s)</string>
+    <string name="zodiac_with_date_and_age">%1$s - %2$s - %3$s</string>
+    <string name="date_with_age">%1$s - %2$s</string>
+
+    <string name="date_value_and_event_description">%1$s: %2$s</string>
+    <string name="hour_value">%1$02d:%2$02d</string>
+
+    <string name="theme">Tema</string>
+    <string name="theme_mode">Estilo del tema</string>
+    <string name="theme_mode_system">Seguir al sistema</string>
+    <string name="theme_mode_light">Claro</string>
+    <string name="theme_mode_dark">Oscuro</string>
+    <string name="theme_mode_summary">%1$s</string>
+    <string name="pure_black">Fondo negro puro</string>
+    <string name="pure_black_summary">Usar negro puro de fondo en modo oscuro</string>
+    <string name="system_accent">Color de acento del sistema</string>
+    <string name="system_accent_summary">Usar el color de acento del sistema en lugar del naranja de la app</string>
+
+    <string name="strings_middle_separator">,&#160;</string>
+    <string name="strings_last_separator">&#160;y&#160;</string>
+
+    <!-- Main screen -->
+    <string name="search_contacts">Buscar contactos</string>
+    <string name="close_search">Cerrar búsqueda</string>
+    <string name="add_contact">Añadir contacto</string>
+    <string name="accounts">Cuentas</string>
+    <string name="all_accounts">Todas las cuentas</string>
+    <string name="no_contacts_found">No se encontraron contactos</string>
+    <string name="unknown">Desconocido</string>
+    <string name="without_events">Sin eventos</string>
+
+    <string name="add_event">Añadir evento</string>
+    <string name="delete_event">Eliminar evento</string>
+    <string name="event">Evento</string>
+    <string name="description">Descripción</string>
+    <string name="select_date">Seleccionar fecha</string>
+    <string name="date">Fecha</string>
+    <string name="ok">Aceptar</string>
+    <string name="search">Buscar</string>
+    <string name="back">Atrás</string>
+    <string name="cancel">Cancelar</string>
+    <string name="camera_permission_denied">Permiso de cámara denegado</string>
+    <string name="new_contact">Nuevo contacto</string>
+    <string name="edit_contact">Editar contacto</string>
+    <string name="delete">Eliminar</string>
+    <string name="delete_contact_title">Eliminar contacto</string>
+    <string name="delete_contact_confirmation">¿Estás seguro de que quieres eliminar el contacto \"%1$s\"?</string>
+    <string name="delete_event_title">Eliminar evento</string>
+    <string name="delete_event_confirmation">¿Estás seguro de que quieres eliminar el evento \"%1$s\"?</string>
+    <string name="name_section">Nombre</string>
+    <string name="special_dates_section">Fechas especiales</string>
+    <string name="tap_to_change_photo">Toca para cambiar la foto</string>
+    <string name="select_from_gallery">Seleccionar de la galería</string>
+    <string name="take_photo">Hacer foto</string>
+    <string name="view_or_edit_contact_data">Ver o editar datos del contacto</string>
+    <string name="contact_notes">Notas del contacto</string>
+    <string name="edit_notes">Editar notas del contacto</string>
+    <string name="show_alerts_for_contact">Mostrar alertas</string>
+    <string name="show_alerts_for_event_with_date">Mostrar alerta para %1$s\n(%2$s)</string>
+    <string name="no_disabled_contacts">No se encontraron contactos inactivos</string>
+    <string name="badge_no_alerts">Sin alertas</string>
+
+    <string name="month_next_year_header">%2$s de %1$d</string>
+    <string name="month_this_year_header">%2$s</string>
+    <string name="yesterday_header">Ayer</string>
+    <string name="today_header">Hoy</string>
+    <string name="tomorrow_header">Mañana</string>
+    <string name="this_week_header">Esta semana</string>
+    <string name="next_week_header">La próxima semana</string>
+    <string name="this_month_header">Este mes</string>
+
+    <string name="unsaved_changes_message">Se han cambiado datos del contacto.\nSi decide continuar estos cambios se perderán.\n¿Está seguro de que desea continuar?</string>
+    <string name="yes">Sí</string>
+    <string name="continue_editing">No, continuar editando</string>
+
+    <string name="no_contact_photo_letter">\?</string>
+
+    <string name="local_contacts">Contactos locales</string>
+
+    <string name="date_format">Formato de fechas</string>
+    <string name="date_format_short">Corto (%1$s)</string>
+    <string name="date_format_medium">Medio (%1$s)</string>
+    <string name="date_format_long">Largo (%1$s)</string>
+
+</resources>

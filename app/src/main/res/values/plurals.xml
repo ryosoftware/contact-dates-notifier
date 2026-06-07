@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="days_0">Today</string>
+
+    <plurals name="days">
+        <item quantity="one">1 day</item>
+        <item quantity="other">%1$d days</item>
+    </plurals>
+
+    <plurals name="number_of_days_to_contact_event_notification_text">
+        <item quantity="one">\'%2$s\' tomorrow.\nDon\'t forget&#8230;</item>
+        <item quantity="other">\'%2$s\' in %1$d days.</item>
+    </plurals>
+
+    <plurals name="number_of_days_to_contact_event_with_iteration_number_notification_text">
+        <item quantity="one">\'%2$s\' (%3$d) tomorrow.\nDon\'t forget&#8230;</item>
+        <item quantity="other">\'%2$s\' (%3$d) in %1$d days.</item>
+    </plurals>
+
+    <plurals name="near_events_count_for_one_contacts">
+        <item quantity="one">%1$d near events for one contact: %3$s</item>
+        <item quantity="other">%1$d near events for one contact: %3$s</item>
+    </plurals>
+
+    <plurals name="near_events_count_for_some_contacts">
+        <item quantity="one">%1$d near events for %2$d contacts: %3$s</item>
+        <item quantity="other">%1$d near events for %2$d contacts: %3$s</item>
+    </plurals>
+
+    <plurals name="age_years">
+        <item quantity="one">1 year old</item>
+        <item quantity="other">%1$d years old</item>
+    </plurals>
+
+    <string name="date_value_and_event_description_and_0_days_remaining">%2$s (%3$d): %1$s (Today) 🎉</string>
+
+    <string name="date_value_and_event_description_and_0_days_remaining_no_year">%2$s: %1$s (Today) 🎉</string>
+
+    <plurals name="date_value_and_event_description_and_days_remaining">
+        <item quantity="one">%2$s (%4$d): %1$s (Tomorrow)</item>
+        <item quantity="other">%2$s (%4$d): %1$s (in %3$d days)</item>
+    </plurals>
+
+    <plurals name="date_value_and_event_description_and_days_remaining_no_year">
+        <item quantity="one">%2$s: %1$s (Tomorrow)</item>
+        <item quantity="other">%2$s: %1$s (in %3$d days)</item>
+    </plurals>
+
+</resources>
+

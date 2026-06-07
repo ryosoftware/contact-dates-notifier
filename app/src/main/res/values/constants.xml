@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="github_repo">https://github.com/ryosoftware/contact-dates-notifier</string>
+
+    <string name="enable_notifications_default">true</string>
+    
+    <string name="notification_days_left_default">7</string>
+    
+    <string name="notification_hour_default">09:00"</string>
+    
+    <string name="clearable_notification_default">false</string>
+
+    <string name="disabled_behavior_default">gray-disabled</string>
+
+    <string name="show_large_photo_for_contacts_that_has_events_in_the_near_future_default">true</string>
+    <string name="show_large_photo_for_contacts_that_do_not_has_events_in_the_near_future_default">false</string>
+
+    <string name="add_header_for_today_and_tomorrow_events_default">true</string>
+
+    <string name="group_contact_events_default">true</string>
+
+    <string name="theme_style_default" translatable="false">system</string>
+    <string name="pure_black_background_default">false</string>
+    <string name="use_system_accent_default">false</string>
+
+    <string name="date_format_default">medium</string>
+
+</resources>

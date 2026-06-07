@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string name="days_0">hoy</string>
+
+    <plurals name="days">
+        <item quantity="one">1 día</item>
+        <item quantity="other">%1$d días</item>
+        <item quantity="many">%1$d días</item>
+    </plurals>
+
+    <plurals name="number_of_days_to_contact_event_notification_text">
+        <item quantity="one">Mañana es su \'%2$s\', no olvides felicitarle&#8230;</item>
+        <item quantity="other">En %1$d días será su \'%2$s\'.</item>
+        <item quantity="many">En %1$d días será su \'%2$s\'.</item>
+    </plurals>
+
+    <plurals name="number_of_days_to_contact_event_with_iteration_number_notification_text">
+        <item quantity="one">Mañana es su \'%2$s\' (%3$d), no olvides felicitarle&#8230;</item>
+        <item quantity="other">En %1$d días será su \'%2$s\' (%3$d).\n</item>
+        <item quantity="many">En %1$d días será su \'%2$s\' (%3$d).\n</item>
+    </plurals>
+
+    <plurals name="near_events_count_for_one_contacts">
+        <item quantity="one">%1$d evento próximo para un contacto: %3$s</item>
+        <item quantity="other">%1$d eventos próximos para un contacto: %3$s</item>
+        <item quantity="many">%1$d eventos próximos para un contacto: %3$s</item>
+    </plurals>
+
+    <plurals name="near_events_count_for_some_contacts">
+        <item quantity="one">%1$d eventos próximos para %2$d contactos: %3$s</item>
+        <item quantity="other">%1$d eventos próximos para %2$d contactos: %3$s</item>
+        <item quantity="many">%1$d eventos próximos para %2$d contactos: %3$s</item>
+    </plurals>
+
+    <plurals name="age_years">
+        <item quantity="one">1 año</item>
+        <item quantity="other">%1$d años</item>
+        <item quantity="many">%1$d años</item>
+    </plurals>
+
+    <string name="date_value_and_event_description_and_0_days_remaining">%2$s (%3$d): %1$s (hoy) 🎉</string>
+
+    <string name="date_value_and_event_description_and_0_days_remaining_no_year">%2$s: %1$s (hoy) 🎉</string>
+
+    <plurals name="date_value_and_event_description_and_days_remaining">
+        <item quantity="one">%2$s (%4$d): %1$s (mañana)</item>
+        <item quantity="other">%2$s (%4$d): %1$s (en %3$d días)</item>
+        <item quantity="many">%2$s (%4$d): %1$s (en %3$d días)</item>
+    </plurals>
+
+    <plurals name="date_value_and_event_description_and_days_remaining_no_year">
+        <item quantity="one">%2$s: %1$s (mañana)</item>
+        <item quantity="other">%2$s: %1$s (en %3$d días)</item>
+        <item quantity="many">%2$s: %1$s (en %3$d días)</item>
+    </plurals>
+
+</resources>

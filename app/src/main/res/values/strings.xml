@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="app_name">Contact Dates</string>
+
+    <string name="today_contact_event_notification_text">\'%1$s\' today!\nDon\'t forget&#8230;</string>
+    <string name="today_contact_event_with_iteration_number_notification_text">\'%1$s\' (%2$d) today!\nDon\'t forget&#8230;</string>
+
+    <string name="app_contacts">App contacts</string>
+
+    <string name="contact_stored_at">Contact stored at %1$s</string>
+
+    <string name="settings">Settings</string>
+
+    <string name="notification_channel_background_service">Background service</string>
+    <string name="notification_channel_notification_event">Notification event</string>
+    <string name="running_background_tasks">Running tasks in background</string>
+
+    <string name="save">save</string>
+
+    <string name="enable_notifications">Notifications</string>
+    <string name="enable_notifications_on_summary">Enable application notifications</string>
+    <string name="enable_notifications_off_summary">Disable application notifications</string>
+
+    <string name="not_notified_accounts_title">Accounts that will be notified</string>
+    <string name="not_notified_accounts_none">All accounts will be notified</string>
+    <string name="not_notified_accounts_selected">All accounts will be notified except %1$s</string>
+
+    <string name="notification_days_left">Days before</string>
+    <string name="notify_the_same_day">Notify the same day</string>
+    <string name="notification_days_left_summary">Notify %1$d days before</string>
+
+    <string name="notification_hour">What time</string>
+
+    <string name="clearable_notification">Clearable notification</string>
+    <string name="clearable_notification_on_summary">Delete notification when enters the app or when user clicks the delete clearable notifications button</string>
+    <string name="clearable_notification_off_summary">Ongoing notifications (notification automatically cleared when no pending events)</string>
+
+    <string name="contacts_list">Contacts list</string>
+
+    <string name="disabled_behavior">Differentiate Disabled contacts</string>
+    <string name="disabled_behavior_hide_disabled">Do not show</string>
+    <string name="disabled_behavior_gray_disabled">Gray</string>
+    <string name="disabled_behavior_do_not_differentiate">Show as normal</string>
+
+    <string name="show_large_photo_for_contacts_that_has_events_in_the_near_future">Show a large photo for contacts with events in the near future</string>
+    <string name="show_large_photo_for_contacts_that_has_events_in_the_near_future_on_summary">Show a large photo for contacts with events in the near future (%1$s)</string>
+    <string name="show_large_photo_for_contacts_that_has_events_in_the_near_future_off_summary">Show a small photo for all contacts, even for the contacts that has events in the near future (%1$s)</string>
+
+    <string name="show_large_photo_for_contacts_that_do_not_has_events_in_the_near_future">Show a large photo for contacts with no events in the near future</string>
+    <string name="show_large_photo_for_contacts_that_do_not_has_events_in_the_near_future_on_summary">Show a large photo for contacts that do not has events in the near future (%1$s)</string>
+    <string name="show_large_photo_for_contacts_that_do_not_has_events_in_the_near_future_off_summary">Show a small photo for contacts that do not has events in the near future (%1$s)</string>
+
+    <string name="add_header_for_today_and_tomorrow_events">Add a header for yesterday, today and tomorrow events</string>
+    <string name="add_header_for_today_and_tomorrow_events_on_summary">A special header will be added for yesterday\'s, today\'s and tomorrow\'s events</string>
+    <string name="add_header_for_today_and_tomorrow_events_off_summary">The events of yesterday, today and tomorrow will be included under broader headings</string>
+
+    <string name="manage_disabled_users">Manage disabled contacts and events</string>
+    <string name="manage_disabled_users_summary">Click to manage contacts or events for whom alert notifications have been disabled</string>
+
+    <string name="group_contact_events">Group contact events</string>
+    <string name="group_contact_events_on_summary">Group all events for a contact and display the number of days until first event</string>
+    <string name="group_contact_events_off_summary">Display each event separately</string>
+
+    <string name="dismiss_until_next_year">Dismiss for this year</string>
+    <string name="dismiss_until_event_date">Remind on event day</string>
+
+    <string name="about">About</string>
+
+    <string name="app_version_name">Version</string>
+    <string name="app_version_name_summary">%1$s (%2$s)</string>
+
+    <string name="github_repository">GitHub Repository</string>
+    <string name="github_repository_summary">Click to browse the app\'s source code, including its license</string>
+
+    <string name="accept_button">Accept</string>
+    <string name="cancel_button">Cancel</string>
+
+    <string name="days">Days</string>
+
+    <string name="anniversary">Anniversary</string>
+    <string name="birthday">Birthday</string>
+    <string name="zodiac_aries">Aries</string>
+    <string name="zodiac_taurus">Taurus</string>
+    <string name="zodiac_gemini">Gemini</string>
+    <string name="zodiac_cancer">Cancer</string>
+    <string name="zodiac_leo">Leo</string>
+    <string name="zodiac_virgo">Virgo</string>
+    <string name="zodiac_libra">Libra</string>
+    <string name="zodiac_scorpio">Scorpio</string>
+    <string name="zodiac_sagittarius">Sagittarius</string>
+    <string name="zodiac_capricorn">Capricorn</string>
+    <string name="zodiac_aquarius">Aquarius</string>
+    <string name="zodiac_pisces">Pisces</string>
+
+    <string name="zodiac_with_date">%1$s (%2$s)</string>
+    <string name="zodiac_with_date_and_age">%1$s - %2$s - %3$s</string>
+    <string name="date_with_age">%1$s - %2$s</string>
+
+    <string name="date_value_and_event_description">%1$s: %2$s</string>
+    <string name="hour_value">%1$02d:%2$02d</string>
+
+    <string name="theme">Theme</string>
+    <string name="theme_mode">Theme style</string>
+    <string name="theme_mode_system">Follow system</string>
+    <string name="theme_mode_light">Light</string>
+    <string name="theme_mode_dark">Dark</string>
+    <string name="theme_mode_summary">%1$s</string>
+    <string name="pure_black">Pure black background</string>
+    <string name="pure_black_summary">Use pure black for background in dark mode</string>
+    <string name="system_accent">System accent color</string>
+    <string name="system_accent_summary">Use system accent color instead of app orange</string>
+
+    <string name="strings_middle_separator">,&#160;</string>
+    <string name="strings_last_separator">&#160;and&#160;</string>
+
+    <!-- Main screen -->
+    <string name="search_contacts">Search contacts</string>
+    <string name="close_search">Close search</string>
+    <string name="add_contact">Add contact</string>
+    <string name="accounts">Accounts</string>
+    <string name="all_accounts">All accounts</string>
+    <string name="no_contacts_found">No contacts found</string>
+    <string name="unknown">Unknown</string>
+    <string name="without_events">Without events</string>
+
+    <string name="add_event">Add event</string>
+    <string name="delete_event">Delete event</string>
+    <string name="event">Event</string>
+    <string name="description">Description</string>
+    <string name="select_date">Select date</string>
+    <string name="date">Date</string>
+    <string name="ok">OK</string>
+    <string name="search">Search</string>
+    <string name="back">Back</string>
+    <string name="cancel">Cancel</string>
+    <string name="camera_permission_denied">Camera permission denied</string>
+    <string name="new_contact">New contact</string>
+    <string name="edit_contact">Edit contact</string>
+    <string name="delete">Delete</string>
+    <string name="delete_contact_title">Delete contact</string>
+    <string name="delete_contact_confirmation">Are you sure you want to delete contact \"%1$s\"?</string>
+    <string name="delete_event_title">Delete event</string>
+    <string name="delete_event_confirmation">Are you sure you want to delete event \"%1$s\"?</string>
+    <string name="name_section">Name</string>
+    <string name="special_dates_section">Special dates</string>
+    <string name="tap_to_change_photo">Tap to change photo</string>
+    <string name="select_from_gallery">Select from gallery</string>
+    <string name="take_photo">Take photo</string>
+    <string name="view_or_edit_contact_data">View or Edit contact data</string>
+    <string name="contact_notes">Contact Notes</string>
+    <string name="edit_notes">Edit contact notes</string>
+    <string name="show_alerts_for_contact">Show alerts</string>
+    <string name="show_alerts_for_event_with_date">Show alert for %1$s\n(%2$s)</string>
+    <string name="no_disabled_contacts">No disabled contacts found</string>
+    <string name="badge_no_alerts">No alerts</string>
+
+    <string name="month_next_year_header">%2$s, %1$d</string>
+    <string name="month_this_year_header">%2$s</string>
+    <string name="yesterday_header">Yesterday</string>
+    <string name="today_header">Today</string>
+    <string name="tomorrow_header">Tomorrow</string>
+    <string name="this_week_header">This week</string>
+    <string name="next_week_header">Next week</string>
+    <string name="this_month_header">This month</string>
+
+    <string name="unsaved_changes_message">Contact data has been changed.\nIf you continue these changes will be lost.\nAre you sure you want to continue?</string>
+    <string name="yes">Yes</string>
+    <string name="continue_editing">No, continue editing</string>
+
+    <string name="no_contact_photo_letter">\?</string>
+
+    <string name="local_contacts">Local contacts</string>
+
+    <string name="date_format">Dates format</string>
+    <string name="date_format_short">Short (%1$s)</string>
+    <string name="date_format_medium">Medium (%1$s)</string>
+    <string name="date_format_long">Long (%1$s)</string>
+
+</resources>

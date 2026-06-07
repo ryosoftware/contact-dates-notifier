@@ -1,0 +1,13 @@
+<resources>
+
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="primary">#FFEF6C00</color>
+    <color name="on_primary">@color/white</color>
+
+    <color name="secondary">#FFEF9144</color>
+    <color name="on_secondary">@color/white</color>
+
+    <color name="ic_launcher_background">@color/primary</color>
+
+</resources>
