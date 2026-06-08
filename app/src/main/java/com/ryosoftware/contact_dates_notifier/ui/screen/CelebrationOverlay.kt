@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import kotlinx.coroutines.delay
 import kotlin.math.sin
 import kotlin.random.Random
+import kotlin.time.Duration.Companion.milliseconds
 
 private data class Balloon(
     val x: Float,
@@ -44,7 +45,7 @@ fun CelebrationOverlay(
     LaunchedEffect(Unit) {
         var lastTime = System.nanoTime()
         while (true) {
-            delay(16)
+            delay(16.milliseconds)
             val now = System.nanoTime()
             val delta = (now - lastTime) / 1_000_000_000f
             lastTime = now

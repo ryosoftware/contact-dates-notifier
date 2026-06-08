@@ -11,8 +11,8 @@ android {
 
     defaultConfig {
         applicationId "com.ryosoftware.contact_dates_notifier"
-        versionCode 400000001
-        versionName "4.0.1"
+        versionCode 400000002
+        versionName "4.0.2"
 
         minSdkVersion 23
         targetSdkVersion 37
@@ -20,7 +20,7 @@ android {
         buildConfigField(
             "String",
             "TAG",
-            "\"Contact_Dates_Notifier\""
+            "\"ContactDatesNotifier\""
         )
         buildConfigField(
             "String",

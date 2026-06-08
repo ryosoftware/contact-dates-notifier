@@ -14,6 +14,7 @@ class DismissEventActionsReceiver : BroadcastReceiver() {
     companion object {
         const val ACTION_DISMISS_EVENT_UNTIL_NEXT_YEAR = BuildConfig.APPLICATION_ID + ".DismissEventActionsReceiver.DISMISS_EVENT_UNTIL_NEXT_YEAR"
         const val ACTION_DISMISS_EVENT_UNTIL_EVENT_DAY = BuildConfig.APPLICATION_ID + ".DismissEventActionsReceiver.DISMISS_EVENT_UNTIL_EVENT_DAY"
+        const val ACTION_DISMISS_TODAY_EVENT = BuildConfig.APPLICATION_ID + ".DismissEventActionsReceiver.DISMISS_TODAY_EVENT"
 
         const val EXTRA_CONTACT_KEY = "contact-key"
         const val EXTRA_EVENT_TIME = "event-time"
@@ -55,6 +56,12 @@ class DismissEventActionsReceiver : BroadcastReceiver() {
                         val notificationId = intent.getIntExtra(EXTRA_NOTIFICATION_ID, -1)
                         if (notificationId != -1) MainService.hideNotification(context, notificationId)
                     }
+                }
+            }
+            ACTION_DISMISS_TODAY_EVENT -> {
+                if (intent.hasExtra(EXTRA_NOTIFICATION_ID)) {
+                    val notificationId = intent.getIntExtra(EXTRA_NOTIFICATION_ID, -1)
+                    if (notificationId != -1) MainService.hideNotification(context, notificationId)
                 }
             }
         }

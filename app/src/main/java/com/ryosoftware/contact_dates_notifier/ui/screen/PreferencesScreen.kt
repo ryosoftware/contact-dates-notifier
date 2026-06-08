@@ -92,6 +92,7 @@ fun PreferencesContent(
 ) {
     var enableNotifications by remember { mutableStateOf(ApplicationPreferences.getBoolean(context, ApplicationPreferences.ENABLE_NOTIFICATIONS_KEY, ApplicationPreferences.ENABLE_NOTIFICATIONS_DEFAULT)) }
     var clearableNotification by remember { mutableStateOf(ApplicationPreferences.getBoolean(context, ApplicationPreferences.CLEARABLE_NOTIFICATION_KEY, ApplicationPreferences.CLEARABLE_NOTIFICATION_DEFAULT)) }
+    var notForTodayEvents by remember { mutableStateOf(ApplicationPreferences.getBoolean(context, ApplicationPreferences.CLEARABLE_NOTIFICATION_NOT_FOR_TODAY_EVENTS_KEY, ApplicationPreferences.CLEARABLE_NOTIFICATION_NOT_FOR_TODAY_EVENTS_DEFAULT)) }
     var groupContactEvents by remember { mutableStateOf(ApplicationPreferences.getBoolean(context, ApplicationPreferences.GROUP_CONTACT_EVENTS_KEY, ApplicationPreferences.GROUP_CONTACT_EVENTS_DEFAULT)) }
     var disabledBehavior by remember { mutableStateOf(ApplicationPreferences.getString(context, ApplicationPreferences.DISABLED_BEHAVIOR_KEY, ApplicationPreferences.DISABLED_BEHAVIOR_DEFAULT) ?: ApplicationPreferences.DISABLED_BEHAVIOR_DEFAULT) }
     var showLargePhotoNearFuture by remember { mutableStateOf(ApplicationPreferences.getBoolean(context, ApplicationPreferences.SHOW_LARGE_PHOTO_FOR_CONTACTS_THAT_HAS_EVENTS_IN_THE_NEAR_FUTURE_KEY, ApplicationPreferences.SHOW_LARGE_PHOTO_FOR_CONTACTS_THAT_HAS_EVENTS_IN_THE_NEAR_FUTURE_DEFAULT)) }
@@ -269,6 +270,18 @@ fun PreferencesContent(
                 onCheckedChange = { checked ->
                     ApplicationPreferences.putBoolean(context, ApplicationPreferences.CLEARABLE_NOTIFICATION_KEY, checked)
                     clearableNotification = checked
+                }
+            )
+
+            SwitchPreference(
+                title = context.getString(R.string.not_for_today_events),
+                summaryOn = context.getString(R.string.not_for_today_events_summary),
+                summaryOff = context.getString(R.string.not_for_today_events_summary),
+                checked = notForTodayEvents,
+                enabled = enableNotifications && clearableNotification,
+                onCheckedChange = { checked ->
+                    ApplicationPreferences.putBoolean(context, ApplicationPreferences.CLEARABLE_NOTIFICATION_NOT_FOR_TODAY_EVENTS_KEY, checked)
+                    notForTodayEvents = checked
                 }
             )
 

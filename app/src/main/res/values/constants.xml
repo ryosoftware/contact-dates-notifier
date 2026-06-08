@@ -12,6 +12,8 @@
     
     <string name="clearable_notification_default">false</string>
 
+    <string name="clearable_notification_not_for_today_events_default">false</string>
+
     <string name="disabled_behavior_default">gray-disabled</string>
 
     <string name="show_large_photo_for_contacts_that_has_events_in_the_near_future_default">true</string>

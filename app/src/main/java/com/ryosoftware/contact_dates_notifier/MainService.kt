@@ -42,13 +42,13 @@ class MainService(context: Context, params: WorkerParameters) : Worker(context, 
 
         private const val FOREGROUND_SERVICE_NOTIFICATION_ID = 101
 
-        private const val NOTIFICATION_ID = FOREGROUND_SERVICE_NOTIFICATION_ID + 1
+        private const val FIRST_EVENT_NOTIFICATION_ID = FOREGROUND_SERVICE_NOTIFICATION_ID + 1
 
         private const val NOTIFICATIONS_IDS_KEY = "notifications-ids"
         private const val LAST_SERVICE_EXECUTION_TIME_KEY = "last-notifier-execution"
 
         fun hideNotification(context: Context, notificationId: Int) {
-            NotificationManagerCompat.from(context).cancel(NOTIFICATION_ID + notificationId)
+            NotificationManagerCompat.from(context).cancel(FIRST_EVENT_NOTIFICATION_ID + notificationId)
             val notificationsMap = readNotificationsMap(context).toMutableMap()
             val entry = notificationsMap.entries.find { it.value == notificationId } ?: return
             notificationsMap.remove(entry.key)
@@ -156,7 +156,8 @@ class MainService(context: Context, params: WorkerParameters) : Worker(context, 
     private data class BatchPrefs(
         val notNotifiedAccounts: Set<String>?,
         val notificationDaysLeft: Int,
-        val clearableNotification: Boolean
+        val clearableNotification: Boolean,
+        val clearanleNotificationNotForTodayEvents: Boolean
     )
 
     private fun readBatchPrefs(): BatchPrefs {
@@ -173,6 +174,10 @@ class MainService(context: Context, params: WorkerParameters) : Worker(context, 
             clearableNotification = ApplicationPreferences.getBoolean(
                 context, ApplicationPreferences.CLEARABLE_NOTIFICATION_KEY,
                 ApplicationPreferences.CLEARABLE_NOTIFICATION_DEFAULT
+            ),
+            clearanleNotificationNotForTodayEvents = ApplicationPreferences.getBoolean(
+                context, ApplicationPreferences.CLEARABLE_NOTIFICATION_NOT_FOR_TODAY_EVENTS_KEY,
+                ApplicationPreferences.CLEARABLE_NOTIFICATION_NOT_FOR_TODAY_EVENTS_DEFAULT
             )
         )
     }
@@ -188,8 +193,10 @@ class MainService(context: Context, params: WorkerParameters) : Worker(context, 
         val now = System.currentTimeMillis()
         serviceNeedsToBeExecuted = programmedServiceExecutionForToday in (lastServiceExecution + 1)..now
         val batchPrefs = readBatchPrefs()
-        if (serviceNeedsToBeExecuted || !batchPrefs.clearableNotification) {
-            onProcessEnded(getContacts(batchPrefs))
+        val activeEvents = getContacts(batchPrefs)
+        val hasTodayOngoing = batchPrefs.clearanleNotificationNotForTodayEvents && activeEvents.any { it.event.daysUntilNextIteration() == 0 }
+        if (serviceNeedsToBeExecuted || !batchPrefs.clearableNotification || hasTodayOngoing) {
+            onProcessEnded(activeEvents)
         }
     }
 
@@ -271,13 +278,14 @@ class MainService(context: Context, params: WorkerParameters) : Worker(context, 
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) return
 
         val notificationsManager = NotificationManagerCompat.from(context)
-        notificationsManager.cancelAll()
 
         val notificationsMap = readNotificationsMap(context).toMutableMap()
         var nextAvailableId = (notificationsMap.values.maxOrNull() ?: 0) + 1
         val activeKeys = mutableSetOf<String>()
         val defaults = if (serviceNeedsToBeExecuted) (Notification.DEFAULT_LIGHTS or Notification.DEFAULT_SOUND) else 0
         var soundAssigned = false
+
+        val batchPrefs = readBatchPrefs()
 
         for (i in activeEvents.indices) {
             val ace = activeEvents[i]
@@ -295,8 +303,12 @@ class MainService(context: Context, params: WorkerParameters) : Worker(context, 
                 .setSmallIcon(R.drawable.ic_stat_notification_one)
                 .setContentTitle(ace.contact.name ?: "")
                 .setDefaults(if (!soundAssigned && isNew) { soundAssigned = true; defaults } else 0)
-                .setAutoCancel(true)
             val days = ace.event.daysUntilNextIteration()
+            val isTodayEvent = days == 0
+            val isClearable = if (isTodayEvent && batchPrefs.clearanleNotificationNotForTodayEvents) false else batchPrefs.clearableNotification
+            eventBuilder
+                .setAutoCancel(isClearable)
+                .setOngoing(!isClearable)
             eventBuilder.setContentText(
                     if (days == 0) context.getString(
                     if (ace.event.hasYear) R.string.today_contact_event_with_iteration_number_notification_text
@@ -330,7 +342,7 @@ class MainService(context: Context, params: WorkerParameters) : Worker(context, 
                 eventBuilder.addAction(
                     0, context.getString(R.string.dismiss_until_next_year),
                     PendingIntent.getBroadcast(
-                        context, NOTIFICATION_ID + 4 * notificationId,
+                        context, FIRST_EVENT_NOTIFICATION_ID + 4 * notificationId,
                         Intent(context, DismissEventActionsReceiver::class.java)
                             .setAction(DismissEventActionsReceiver.ACTION_DISMISS_EVENT_UNTIL_NEXT_YEAR)
                             .putExtra(DismissEventActionsReceiver.EXTRA_CONTACT_KEY, ApplicationPreferences.Contacts.getContactKeyForBypassedUntilNextYearEvents(ace.contact))
@@ -343,7 +355,7 @@ class MainService(context: Context, params: WorkerParameters) : Worker(context, 
                 eventBuilder.addAction(
                     0, context.getString(R.string.dismiss_until_event_date),
                     PendingIntent.getBroadcast(
-                        context, NOTIFICATION_ID + 4 * notificationId + 1,
+                        context, FIRST_EVENT_NOTIFICATION_ID + 4 * notificationId + 1,
                         Intent(context, DismissEventActionsReceiver::class.java)
                             .setAction(DismissEventActionsReceiver.ACTION_DISMISS_EVENT_UNTIL_EVENT_DAY)
                             .putExtra(DismissEventActionsReceiver.EXTRA_CONTACT_KEY, ApplicationPreferences.Contacts.getContactKeyForBypassedUntilEventDayEvents(ace.contact))
@@ -353,10 +365,20 @@ class MainService(context: Context, params: WorkerParameters) : Worker(context, 
                         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                     )
                 )
+            } else if (isTodayEvent && batchPrefs.clearanleNotificationNotForTodayEvents) {
+                eventBuilder.addAction(
+                    0, context.getString(R.string.dismiss),
+                    PendingIntent.getBroadcast(
+                        context, FIRST_EVENT_NOTIFICATION_ID + 4 * notificationId,
+                        Intent(context, NotificationDeletedReceiver::class.java)
+                            .putExtra(NotificationDeletedReceiver.EXTRA_NOTIFICATION_ID, notificationId),
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                    )
+                )
             }
             eventBuilder.setDeleteIntent(
                 PendingIntent.getBroadcast(
-                    context, NOTIFICATION_ID + 4 * notificationId + 2,
+                    context, FIRST_EVENT_NOTIFICATION_ID + 4 * notificationId + 2,
                     Intent(context, NotificationDeletedReceiver::class.java)
                         .putExtra(NotificationDeletedReceiver.EXTRA_NOTIFICATION_ID, notificationId),
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
@@ -364,12 +386,12 @@ class MainService(context: Context, params: WorkerParameters) : Worker(context, 
             )
             eventBuilder.setContentIntent(
                 PendingIntent.getActivity(
-                    context, NOTIFICATION_ID + 4 * notificationId + 3,
+                    context, FIRST_EVENT_NOTIFICATION_ID + 4 * notificationId + 3,
                     Intent(context, AppActivity::class.java),
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
                 )
             )
-            notificationsManager.notify(NOTIFICATION_ID + notificationId, eventBuilder.build())
+            notificationsManager.notify(FIRST_EVENT_NOTIFICATION_ID + notificationId, eventBuilder.build())
         }
 
         notificationsMap.keys.removeAll { it !in activeKeys }

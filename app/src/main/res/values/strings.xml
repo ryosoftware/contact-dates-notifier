@@ -37,6 +37,11 @@
     <string name="clearable_notification_on_summary">Delete notification when enters the app or when user clicks the delete clearable notifications button</string>
     <string name="clearable_notification_off_summary">Ongoing notifications (notification automatically cleared when no pending events)</string>
 
+    <string name="not_for_today_events">Not for Today events</string>
+    <string name="not_for_today_events_summary">Today events will not be clearable.\nUse action buttons to dismiss them</string>
+
+    <string name="dismiss">Dismiss</string>
+
     <string name="contacts_list">Contacts list</string>
 
     <string name="disabled_behavior">Differentiate Disabled contacts</string>
@@ -159,7 +164,7 @@
     <string name="month_next_year_header">%2$s, %1$d</string>
     <string name="month_this_year_header">%2$s</string>
     <string name="yesterday_header">Yesterday</string>
-    <string name="today_header">Today</string>
+    <string name="today_header">Today 🎉</string>
     <string name="tomorrow_header">Tomorrow</string>
     <string name="this_week_header">This week</string>
     <string name="next_week_header">Next week</string>

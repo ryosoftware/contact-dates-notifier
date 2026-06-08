@@ -72,8 +72,6 @@ fun MainScreen(
     val state by viewModel.uiState.collectAsState()
     var searchQuery by remember { mutableStateOf("") }
     var isSearchActive by remember { mutableStateOf(false) }
-    var toggleRefreshKey by remember { mutableIntStateOf(0) }
-
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     var resumeRefreshKey by remember { mutableIntStateOf(0) }
@@ -93,10 +91,10 @@ fun MainScreen(
     val grayDisabled = remember(disabledBehavior) { disabledBehavior == ApplicationPreferences.DISABLED_BEHAVIOR_GRAY }
     val groupContactEvents = remember(resumeRefreshKey) { ApplicationPreferences.getBoolean(context, ApplicationPreferences.GROUP_CONTACT_EVENTS_KEY, ApplicationPreferences.GROUP_CONTACT_EVENTS_DEFAULT) }
 
-    var filteredContacts by remember(state.contacts, state.selectedAccount, searchQuery, hideDisabled, toggleRefreshKey) {
+    var filteredContacts by remember(state.contacts, state.selectedAccount, searchQuery, hideDisabled) {
         mutableStateOf(emptyList<Contact>())
     }
-    LaunchedEffect(state.contacts, state.selectedAccount, searchQuery, hideDisabled, toggleRefreshKey) {
+    LaunchedEffect(state.contacts, state.selectedAccount, searchQuery, hideDisabled) {
         filteredContacts = withContext(Dispatchers.Default) {
             var list = when (state.selectedAccount) {
                 null -> state.contacts
@@ -119,7 +117,7 @@ fun MainScreen(
     val accentColor = if (useSystemAccent) MaterialTheme.colorScheme.primary else colorResource(R.color.primary)
 
     var groupedContacts by remember { mutableStateOf(emptyList<ContactGroup>()) }
-    LaunchedEffect(filteredContacts, groupContactEvents, hideDisabled, addHeaderTodayTomorrow, toggleRefreshKey) {
+    LaunchedEffect(filteredContacts, groupContactEvents, hideDisabled, addHeaderTodayTomorrow) {
         groupedContacts = withContext(Dispatchers.Default) {
             groupContactsByDate(filteredContacts, context, groupContactEvents, hideDisabled, addHeaderTodayTomorrow)
         }
@@ -235,15 +233,40 @@ fun MainScreen(
                 else -> ContactList(
                     groupedContacts = groupedContacts,
                     onContactClick = onContactClick,
-                    onToggleDisabled = {
-                        toggleContactDisabled(it, context)
-                        toggleRefreshKey++
+                    onToggleDisabled = { contact ->
+                        toggleContactDisabled(contact, context)
+                        if (hideDisabled) {
+                            filteredContacts = filteredContacts - contact
+                        } else {
+                            groupedContacts = groupedContacts.map { group ->
+                                group.copy(items = group.items.map { item ->
+                                    if (item.contact == contact) item.copy() else item
+                                })
+                            }
+                        }
                     },
                     onToggleEventDisabled = { contact, event ->
                         toggleEventDisabled(contact, event, context)
-                        toggleRefreshKey++
+                        if (hideDisabled) {
+                            groupedContacts = groupedContacts.mapNotNull { group ->
+                                val filtered = group.items.filterNot { item ->
+                                    item.contact == contact && item.event == event
+                                }
+                                if (filtered.isEmpty()) null else group.copy(items = filtered)
+                            }
+                        } else {
+                            groupedContacts = groupedContacts.map { group ->
+                                group.copy(items = group.items.map { item ->
+                                    if (item.contact == contact && item.event == event) item.copy() else item
+                                })
+                            }
+                        }
                     },
-                    onNotesChanged = { toggleRefreshKey++ },
+                    onNotesChanged = {
+                        groupedContacts = groupedContacts.map { group ->
+                            group.copy(items = group.items.map { it.copy() })
+                        }
+                    },
                     grayDisabled = grayDisabled,
                     groupEvents = groupContactEvents
                 )

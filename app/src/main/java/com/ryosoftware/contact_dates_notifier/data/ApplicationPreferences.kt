@@ -90,6 +90,9 @@ object ApplicationPreferences {
     const val CLEARABLE_NOTIFICATION_KEY = "clearable-notification"
     var CLEARABLE_NOTIFICATION_DEFAULT = false
 
+    const val CLEARABLE_NOTIFICATION_NOT_FOR_TODAY_EVENTS_KEY = "not-for-today-events"
+    var CLEARABLE_NOTIFICATION_NOT_FOR_TODAY_EVENTS_DEFAULT = false
+
     const val DISABLED_BEHAVIOR_KEY = "disabled-behavior"
     const val DISABLED_BEHAVIOR_HIDE = "hide-disabled"
     const val DISABLED_BEHAVIOR_GRAY = "gray-disabled"
@@ -501,6 +504,7 @@ object ApplicationPreferences {
             NOTIFICATION_DAYS_LEFT_DEFAULT = context.getString(R.string.notification_days_left_default).toInt()
             NOTIFICATION_HOUR_DEFAULT = context.getString(R.string.notification_hour_default)
             CLEARABLE_NOTIFICATION_DEFAULT = context.getString(R.string.clearable_notification_default).toBoolean()
+            CLEARABLE_NOTIFICATION_NOT_FOR_TODAY_EVENTS_DEFAULT = context.getString(R.string.clearable_notification_not_for_today_events_default).toBoolean()
             DISABLED_BEHAVIOR_DEFAULT = context.getString(R.string.disabled_behavior_default)
             SHOW_LARGE_PHOTO_FOR_CONTACTS_THAT_HAS_EVENTS_IN_THE_NEAR_FUTURE_DEFAULT = context.getString(R.string.show_large_photo_for_contacts_that_has_events_in_the_near_future_default).toBoolean()
             SHOW_LARGE_PHOTO_FOR_CONTACTS_THAT_DO_NOT_HAS_EVENTS_IN_THE_NEAR_FUTURE_DEFAULT = context.getString(R.string.show_large_photo_for_contacts_that_do_not_has_events_in_the_near_future_default).toBoolean()
