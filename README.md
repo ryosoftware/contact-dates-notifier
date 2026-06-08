@@ -9,8 +9,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/ryosoftware/birthdays-notifier/releases">
-    <img src="https://img.shields.io/github/v/release/ryosoftware/birthdays-notifier?label=version&style=flat-square" alt="Version">
+  <a href="https://github.com/ryosoftware/contat-dates-notifier/releases">
+    <img src="https://img.shields.io/github/v/release/ryosoftware/contact-dates-notifier?label=version&style=flat-square" alt="Version">
   </a>
   <a href="LICENSE.md">
     <img src="https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-blue?style=flat-square" alt="License">
@@ -25,7 +25,7 @@
 
 ## 📱 About
 
-**Birthdays Notifier** is a beautiful, privacy-first Android app that keeps you informed about upcoming contact events — birthdays, anniversaries, namedays, or any custom date you want to remember. It works with synced accounts, local (device-only) contacts, and even lets you create contacts directly inside the app.
+**Contact Dates Notifier** is a beautiful, privacy-first Android app that keeps you informed about upcoming contact events — birthdays, anniversaries, namedays, or any custom date you want to remember. It works with synced accounts, local (device-only) contacts, and even lets you create contacts directly inside the app.
 
 No internet permission required. Your data stays on your device.
 
@@ -77,7 +77,7 @@ No internet permission required. Your data stays on your device.
 
 | Source | Link |
 |--------|------|
-| **GitHub Releases** | [Latest release](https://github.com/ryosoftware/birthdays-notifier/releases) |
+| **GitHub Releases** | [Latest release](https://github.com/ryosoftware/contact-dates-notifier/releases) |
 
 ---
 
