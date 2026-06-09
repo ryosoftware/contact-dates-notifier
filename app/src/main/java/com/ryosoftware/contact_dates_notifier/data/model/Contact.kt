@@ -35,7 +35,7 @@ abstract class Contact(
     }
 
     open class Event(
-        description: String,
+        var description: String,
         day: Int,
         month: Int,
         year: Int? = null
@@ -44,19 +44,11 @@ abstract class Contact(
             const val LEAP_YEAR = 1904
         }
 
-        var description: String = description
         var time: Long = if (year != null) DateTimeUtilities.getDateFromParts(year, month, day)
         else DateTimeUtilities.getDateFromParts(LEAP_YEAR, month, day)
             internal set
         @get:JvmName("hasYear")
     val hasYear: Boolean = year != null
-
-        constructor(description: String, parts: IntArray) : this(
-            description = description,
-            day = parts[0],
-            month = parts[1],
-            year = if (parts.size == 3) parts[2] else null
-        )
 
         val yearsUntilNextIteration: Int
             get() {
