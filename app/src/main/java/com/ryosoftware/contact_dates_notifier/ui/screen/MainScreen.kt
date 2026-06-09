@@ -798,21 +798,41 @@ private fun ContactEventsContent(contact: Contact, singleEvent: Contact.Event?) 
     val formatStyle = remember(context) { ApplicationPreferences.getDateFormatStyle(context) }
     val events = remember(contact, singleEvent) {
         if (singleEvent != null) listOf(singleEvent)
-        else contact.events.sortedBy { it.nextIteration }
+        else contact.events.sortedBy { event ->
+            val days = DateTimeUtilities.getRelativeDays(event.time)
+            if (days >= -1) days + 1 else Int.MAX_VALUE
+        }
     }
 
     Column {
         events.forEach { event ->
-            val daysRemaining = remember(event) { event.daysUntilNextIteration() }
-            val dateStr = remember(event, formatStyle) { DateTimeUtilities.getDateString(formatStyle, event.nextIteration) }
+            val relativeDays = remember(event) { DateTimeUtilities.getRelativeDays(event.time) }
+            val daysRemaining = remember(event, relativeDays) {
+                if (relativeDays == -1) -1 else event.daysUntilNextIteration()
+            }
+            val dateStr = remember(event, formatStyle, relativeDays) {
+                if (relativeDays == -1) {
+                    val cal = DateTimeUtilities.getCalendar(event.time)
+                    cal.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR))
+                    DateTimeUtilities.getDateString(formatStyle, cal.timeInMillis)
+                } else {
+                    DateTimeUtilities.getDateString(formatStyle, event.nextIteration)
+                }
+            }
             val repetitionNumber = remember(event) { event.yearsUntilNextIteration }
             val displayText = remember(daysRemaining, dateStr, event, context) {
                 if (event.hasYear) {
-                    if (daysRemaining == 0) context.getString(R.string.date_value_and_event_description_and_0_days_remaining, dateStr, event.description, repetitionNumber)
-                    else context.resources.getQuantityString(R.plurals.date_value_and_event_description_and_days_remaining, daysRemaining, dateStr, event.description, daysRemaining, repetitionNumber)
+                    when (daysRemaining) {
+                        0 -> context.getString(R.string.date_value_and_event_description_and_zero_days_remaining, dateStr, event.description, repetitionNumber)
+                        -1 -> context.getString(R.string.date_value_and_event_description_and_minus_one_days_remaining, dateStr, event.description, repetitionNumber)
+                        else -> context.resources.getQuantityString(R.plurals.date_value_and_event_description_and_days_remaining, daysRemaining, dateStr, event.description, daysRemaining, repetitionNumber)
+                    }
                 } else {
-                    if (daysRemaining == 0) context.getString(R.string.date_value_and_event_description_and_0_days_remaining_no_year, dateStr, event.description)
-                    else context.resources.getQuantityString(R.plurals.date_value_and_event_description_and_days_remaining_no_year, daysRemaining, dateStr, event.description, daysRemaining)
+                    when (daysRemaining) {
+                        0 -> context.getString(R.string.date_value_and_event_description_and_zero_days_remaining_no_year, dateStr, event.description)
+                        -1 -> context.getString(R.string.date_value_and_event_description_and_minus_one_days_remaining_no_year, dateStr, event.description)
+                        else -> context.resources.getQuantityString(R.plurals.date_value_and_event_description_and_days_remaining_no_year, daysRemaining, dateStr, event.description, daysRemaining)
+                    }
                 }
             }
             Text(
@@ -953,11 +973,15 @@ private fun groupContactsByDate(contacts: List<Contact>, context: android.conten
 
     if (groupEvents) {
         for (contact in contacts) {
-            val firstEvent = contact.firstEvent ?: run {
+            if (contact.events.isEmpty()) {
                 noEventItems.add(ContactDisplayItem(contact))
                 continue
             }
-            val header = headerCategoryForEvent(firstEvent, today, collapseTT)
+            val bestEvent = contact.events.minByOrNull { event ->
+                val days = DateTimeUtilities.getRelativeDays(event.time)
+                if (days >= -1) days + 1 else Int.MAX_VALUE
+            }!!
+            val header = headerCategoryForEvent(bestEvent, today, collapseTT)
             groups.getOrPut(header) { mutableListOf() }.add(ContactDisplayItem(contact))
         }
     } else {

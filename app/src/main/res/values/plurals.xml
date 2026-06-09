@@ -34,9 +34,13 @@
         <item quantity="other">%1$d years old</item>
     </plurals>
 
-    <string name="date_value_and_event_description_and_0_days_remaining">%2$s (%3$d): %1$s (Today) 🎉</string>
+    <string name="date_value_and_event_description_and_minus_one_days_remaining">%2$s (%3$d): %1$s (Yesterday) 🎉</string>
 
-    <string name="date_value_and_event_description_and_0_days_remaining_no_year">%2$s: %1$s (Today) 🎉</string>
+    <string name="date_value_and_event_description_and_minus_one_days_remaining_no_year">%2$s: %1$s (Yesterday) 🎉</string>
+
+    <string name="date_value_and_event_description_and_zero_days_remaining">%2$s (%3$d): %1$s (Today) 🎉</string>
+
+    <string name="date_value_and_event_description_and_zero_days_remaining_no_year">%2$s: %1$s (Today) 🎉</string>
 
     <plurals name="date_value_and_event_description_and_days_remaining">
         <item quantity="one">%2$s (%4$d): %1$s (Tomorrow)</item>

@@ -163,7 +163,7 @@
 
     <string name="month_next_year_header">%2$s, %1$d</string>
     <string name="month_this_year_header">%2$s</string>
-    <string name="yesterday_header">Yesterday</string>
+    <string name="yesterday_header">Yesterday ⚠️</string>
     <string name="today_header">Today 🎉</string>
     <string name="tomorrow_header">Tomorrow</string>
     <string name="this_week_header">This week</string>
