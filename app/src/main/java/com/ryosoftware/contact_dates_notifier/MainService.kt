@@ -103,7 +103,6 @@ class MainService(context: Context, params: WorkerParameters) : Worker(context, 
             val initialDelay = nextTime - System.currentTimeMillis()
             val request = OneTimeWorkRequest.Builder(MainService::class.java)
                 .setInitialDelay(initialDelay, java.util.concurrent.TimeUnit.MILLISECONDS)
-                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .build()
             WorkManager.getInstance(context).enqueueUniqueWork(
                 MainService::class.java.name,
@@ -115,7 +114,6 @@ class MainService(context: Context, params: WorkerParameters) : Worker(context, 
         fun startService(context: Context) {
             if (!ApplicationPreferences.getBoolean(context, ApplicationPreferences.ENABLE_NOTIFICATIONS_KEY, ApplicationPreferences.ENABLE_NOTIFICATIONS_DEFAULT)) return
             val request = OneTimeWorkRequest.Builder(MainService::class.java)
-                .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
                 .build()
             WorkManager.getInstance(context).enqueueUniqueWork(
                 MainService::class.java.name,
