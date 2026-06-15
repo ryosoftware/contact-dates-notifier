@@ -63,7 +63,6 @@ import androidx.core.net.toUri
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.work.WorkManager
 import com.ryosoftware.contact_dates_notifier.data.ApplicationPreferences
 import com.ryosoftware.contact_dates_notifier.data.DeviceContactsDriver
 import com.ryosoftware.contact_dates_notifier.data.ApplicationContactsDriver
@@ -235,7 +234,7 @@ fun PreferencesContent(
                             MainService.schedule(context)
                         }
                     } else {
-                        WorkManager.getInstance(context).cancelUniqueWork(MainService::class.java.name)
+                        MainService.cancelService(context)
                     }
                 }
             )

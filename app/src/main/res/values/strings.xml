@@ -178,6 +178,10 @@
 
     <string name="local_contacts">Local contacts</string>
 
+    <string name="exact_alarm_permission_title">Set exact alarms</string>
+    <string name="exact_alarm_permission_message">The app uses exact alarms to schedule notifications at the precise time you selected. To do this, it needs your permission to set exact alarms.\n\nPlease grant this permission in the system settings.</string>
+    <string name="go_to_settings">Go to settings</string>
+
     <string name="date_format">Dates format</string>
     <string name="date_format_short">Short (%1$s)</string>
     <string name="date_format_medium">Medium (%1$s)</string>

@@ -178,6 +178,10 @@
 
     <string name="local_contacts">Contactos locales</string>
 
+    <string name="exact_alarm_permission_title">Establecer alarmas exactas</string>
+    <string name="exact_alarm_permission_message">La aplicación usa alarmas exactas para programar las notificaciones en el horario preciso que seleccionaste. Para ello, necesita tu permiso para establecer alarmas exactas.\n\nPor favor, concede este permiso en los ajustes del sistema.</string>
+    <string name="go_to_settings">Ir a ajustes</string>
+
     <string name="date_format">Formato de fechas</string>
     <string name="date_format_short">Corto (%1$s)</string>
     <string name="date_format_medium">Medio (%1$s)</string>

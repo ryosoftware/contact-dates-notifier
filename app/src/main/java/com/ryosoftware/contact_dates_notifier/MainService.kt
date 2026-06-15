@@ -3,6 +3,7 @@ package com.ryosoftware.contact_dates_notifier
 import android.Manifest
 import android.app.Notification
 import android.app.PendingIntent
+import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
@@ -13,12 +14,13 @@ import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.app.AlarmManager
 import android.os.Build
+import android.os.IBinder
 import android.content.pm.PackageManager
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.work.*
 import com.ryosoftware.contact_dates_notifier.data.ApplicationContactsDriver
 import com.ryosoftware.utilities.DateTimeUtilities
 import com.ryosoftware.contact_dates_notifier.data.ApplicationPreferences
@@ -35,17 +37,16 @@ import java.util.*
 import androidx.core.graphics.createBitmap
 import org.json.JSONObject
 
-class MainService(context: Context, params: WorkerParameters) : Worker(context, params) {
+class MainService : Service() {
 
     companion object {
-        const val ACTION_RUN_SERVICE = BuildConfig.APPLICATION_ID + ".RUN_SERVICE"
-
         private const val FOREGROUND_SERVICE_NOTIFICATION_ID = 101
 
         private const val FIRST_EVENT_NOTIFICATION_ID = FOREGROUND_SERVICE_NOTIFICATION_ID + 1
 
         private const val NOTIFICATIONS_IDS_KEY = "notifications-ids"
         private const val LAST_SERVICE_EXECUTION_TIME_KEY = "last-notifier-execution"
+        private const val ALARM_REQUEST_CODE = 42
 
         fun hideNotification(context: Context, notificationId: Int) {
             NotificationManagerCompat.from(context).cancel(FIRST_EVENT_NOTIFICATION_ID + notificationId)
@@ -100,26 +101,29 @@ class MainService(context: Context, params: WorkerParameters) : Worker(context, 
                 ApplicationPreferences.NOTIFICATION_HOUR_DEFAULT
             )
             val nextTime = DateTimeUtilities.getTimeFromString(hour, true)
-            val initialDelay = nextTime - System.currentTimeMillis()
-            val request = OneTimeWorkRequest.Builder(MainService::class.java)
-                .setInitialDelay(initialDelay, java.util.concurrent.TimeUnit.MILLISECONDS)
-                .build()
-            WorkManager.getInstance(context).enqueueUniqueWork(
-                MainService::class.java.name,
-                ExistingWorkPolicy.REPLACE,
-                request
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(context, MainService::class.java)
+            val pendingIntent = PendingIntent.getForegroundService(
+                context, ALARM_REQUEST_CODE, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, nextTime, pendingIntent)
         }
 
         fun startService(context: Context) {
             if (!ApplicationPreferences.getBoolean(context, ApplicationPreferences.ENABLE_NOTIFICATIONS_KEY, ApplicationPreferences.ENABLE_NOTIFICATIONS_DEFAULT)) return
-            val request = OneTimeWorkRequest.Builder(MainService::class.java)
-                .build()
-            WorkManager.getInstance(context).enqueueUniqueWork(
-                MainService::class.java.name,
-                ExistingWorkPolicy.REPLACE,
-                request
+            val intent = Intent(context, MainService::class.java)
+            ContextCompat.startForegroundService(context, intent)
+        }
+
+        fun cancelService(context: Context) {
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(context, MainService::class.java)
+            val pendingIntent = PendingIntent.getForegroundService(
+                context, ALARM_REQUEST_CODE, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
+            alarmManager.cancel(pendingIntent)
         }
 
         fun onBootCompleted(context: Context) = startService(context)
@@ -129,29 +133,32 @@ class MainService(context: Context, params: WorkerParameters) : Worker(context, 
 
     private var serviceNeedsToBeExecuted = false
 
-    override fun doWork(): Result {
+    override fun onBind(intent: Intent?): IBinder? = null
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         try {
-            setForegroundAsync(createForegroundInfo())
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                startForeground(FOREGROUND_SERVICE_NOTIFICATION_ID, createNotification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+            } else {
+                startForeground(FOREGROUND_SERVICE_NOTIFICATION_ID, createNotification())
+            }
         } catch (e: Exception) {
             LogUtilities.show(this, "Error setting foreground: ${e.message}")
         }
         doProcess()
-        return Result.success()
+        stopForeground(STOP_FOREGROUND_REMOVE)
+        stopSelf()
+        return START_NOT_STICKY
     }
 
-    private fun createForegroundInfo(): ForegroundInfo {
-        val context = applicationContext
-        val notification = NotificationCompat.Builder(context, Main.BACKGROUND_SERVICE_NOTIFICATION_CHANNEL)
+    private fun createNotification(): Notification {
+        val context = this
+        return NotificationCompat.Builder(context, Main.BACKGROUND_SERVICE_NOTIFICATION_CHANNEL)
             .setContentText(context.getString(R.string.running_background_tasks))
             .setSmallIcon(R.drawable.ic_stat_notification)
             .setPriority(NotificationCompat.PRIORITY_MIN)
             .setOngoing(true)
             .build()
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            ForegroundInfo(FOREGROUND_SERVICE_NOTIFICATION_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
-        } else {
-            ForegroundInfo(FOREGROUND_SERVICE_NOTIFICATION_ID, notification)
-        }
     }
 
     private data class BatchPrefs(

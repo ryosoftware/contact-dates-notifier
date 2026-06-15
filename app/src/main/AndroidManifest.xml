@@ -16,6 +16,13 @@
 
 	<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+	<uses-permission android:name="android.permission.USE_EXACT_ALARM"
+        tools:ignore="ExactAlarmPolicy" />
+
+    <uses-permission
+        android:name="android.permission.SCHEDULE_EXACT_ALARM"
+        android:maxSdkVersion="32" />
+
 	<uses-feature android:name="android.hardware.camera" android:required="false" />
 		
     <application android:name=".Main" android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:theme="@style/AppTheme" >
@@ -31,7 +38,7 @@
 
         <activity android:name=".ui.activities.ManageDisabledUsersActivity" android:label="@string/manage_disabled_users" android:theme="@style/AppThemeWithoutActionBar" android:exported="false" />
 
-		<service android:name="androidx.work.impl.foreground.SystemForegroundService" android:foregroundServiceType="dataSync" tools:node="merge" />
+		<service android:name=".MainService" android:foregroundServiceType="dataSync" android:exported="false" />
 
 		<receiver android:name=".receivers.BootCompletedReceiver" android:exported="true">
 		    <intent-filter>
