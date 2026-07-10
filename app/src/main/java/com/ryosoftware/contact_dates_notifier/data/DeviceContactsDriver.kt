@@ -15,8 +15,7 @@ object DeviceContactsDriver {
     private const val DATE_ORDER = 2
     private const val EVENT_TYPE_ORDER = 3
     private const val EVENT_LABEL_ORDER = 4
-    private const val ACCOUNT_NAME_ORDER = 5
-    private const val ACCOUNT_TYPE_ORDER = 6
+    private const val RAW_CONTACT_ID_ORDER = 5
 
     private val PROJECTION = arrayOf(
         ContactsContract.CommonDataKinds.Event.CONTACT_ID,
@@ -24,8 +23,7 @@ object DeviceContactsDriver {
         ContactsContract.CommonDataKinds.Event.START_DATE,
         ContactsContract.CommonDataKinds.Event.TYPE,
         ContactsContract.CommonDataKinds.Event.LABEL,
-        ContactsContract.RawContacts.ACCOUNT_NAME,
-        ContactsContract.RawContacts.ACCOUNT_TYPE
+        ContactsContract.Data.RAW_CONTACT_ID
     )
 
     private const val DATE_FIELDS_SEPARATOR = "-"
@@ -152,6 +150,22 @@ object DeviceContactsDriver {
             }
         } catch (_: Exception) { }
 
+        val rawContactsAccountMap = mutableMapOf<Long, String?>()
+        try {
+            context.contentResolver.query(
+                ContactsContract.RawContacts.CONTENT_URI,
+                arrayOf(
+                    ContactsContract.RawContacts._ID,
+                    ContactsContract.RawContacts.ACCOUNT_NAME
+                ),
+                null, null, null
+            )?.use { cursor ->
+                while (cursor.moveToNext()) {
+                    rawContactsAccountMap[cursor.getLong(0)] = cursor.getString(1)?.replace(ACCOUNT_NAME_CLEAN_REGEX, "")
+                }
+            }
+        } catch (_: Exception) { }
+
         try {
             val cursor = context.contentResolver.query(
                 ContactsContract.Data.CONTENT_URI,
@@ -179,11 +193,12 @@ object DeviceContactsDriver {
                             var contact = getContactById(contacts, contactId)
                             if (contact == null) {
                                 val immutableId = getContactImmutableIdByDatabaseContactIdentifier(context, contactId)
+                                val rawContactId = it.getLong(RAW_CONTACT_ID_ORDER)
                                 contact = DeviceContact(
                                     databaseContactIdentifier = contactId,
                                     immutableContactIdentifier = immutableId,
                                     name = it.getString(DISPLAY_NAME_ORDER) ?: "",
-                                    accountName = it.getString(ACCOUNT_NAME_ORDER)?.replace(ACCOUNT_NAME_CLEAN_REGEX, ""),
+                                    accountName = rawContactsAccountMap[rawContactId],
                                     groups = contactGroupsMap[contactId],
                                     notes = notesMap[immutableId]
                                 )
@@ -200,6 +215,8 @@ object DeviceContactsDriver {
             LogUtilities.show(DeviceContactsDriver::class.java, e)
         }
         cachedContacts = contacts
+        cachedAccounts = contacts.mapNotNull { it.accountName }
+            .filter { it.isNotEmpty() }.distinct()
         cacheTimestamp = System.currentTimeMillis()
         return contacts
     }
@@ -209,11 +226,9 @@ object DeviceContactsDriver {
         val accounts = mutableListOf<String>()
         try {
             context.contentResolver.query(
-                ContactsContract.Data.CONTENT_URI,
+                ContactsContract.RawContacts.CONTENT_URI,
                 arrayOf(ContactsContract.RawContacts.ACCOUNT_NAME),
-                "${ContactsContract.Data.MIMETYPE}=?",
-                arrayOf(ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE),
-                null
+                null, null, null
             )?.use { cursor ->
                 while (cursor.moveToNext()) {
                     val account = cursor.getString(0)?.replace(ACCOUNT_NAME_CLEAN_REGEX, "")
