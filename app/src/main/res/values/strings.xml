@@ -182,6 +182,9 @@
     <string name="exact_alarm_permission_message">The app uses exact alarms to schedule notifications at the precise time you selected. To do this, it needs your permission to set exact alarms.\n\nPlease grant this permission in the system settings.</string>
     <string name="go_to_settings">Go to settings</string>
 
+    <string name="battery_optimization_title">Disable battery optimization</string>
+    <string name="battery_optimization_message">The app uses exact alarms to deliver notifications on time. On some devices, battery optimization can delay or prevent these alarms from firing.\n\nPlease disable battery optimization for this app in the system settings.</string>
+
     <string name="date_format">Dates format</string>
     <string name="date_format_short">Short (%1$s)</string>
     <string name="date_format_medium">Medium (%1$s)</string>

@@ -182,6 +182,9 @@
     <string name="exact_alarm_permission_message">La aplicación usa alarmas exactas para programar las notificaciones en el horario preciso que seleccionaste. Para ello, necesita tu permiso para establecer alarmas exactas.\n\nPor favor, concede este permiso en los ajustes del sistema.</string>
     <string name="go_to_settings">Ir a ajustes</string>
 
+    <string name="battery_optimization_title">Desactivar optimización de batería</string>
+    <string name="battery_optimization_message">La aplicación usa alarmas exactas para entregar las notificaciones a tiempo. En algunos dispositivos, la optimización de batería puede retrasar o impedir que estas alarmas se disparen.\n\nPor favor, desactiva la optimización de batería para esta aplicación en los ajustes del sistema.</string>
+
     <string name="date_format">Formato de fechas</string>
     <string name="date_format_short">Corto (%1$s)</string>
     <string name="date_format_medium">Medio (%1$s)</string>

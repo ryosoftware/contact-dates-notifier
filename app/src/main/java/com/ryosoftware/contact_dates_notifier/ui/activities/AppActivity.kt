@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
 import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -43,6 +44,7 @@ class AppActivity : ComponentActivity() {
 
     private lateinit var mainViewModel: MainViewModel
     private var needsExactAlarmPermissionDialog by mutableStateOf(false)
+    private var needsBatteryOptimizationDialog by mutableStateOf(false)
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -88,6 +90,13 @@ class AppActivity : ComponentActivity() {
             }
         }
 
+        if (ApplicationPreferences.getBoolean(this, ApplicationPreferences.ENABLE_NOTIFICATIONS_KEY, ApplicationPreferences.ENABLE_NOTIFICATIONS_DEFAULT)) {
+            val powerManager = getSystemService(PowerManager::class.java)
+            if (!powerManager.isIgnoringBatteryOptimizations(packageName)) {
+                needsBatteryOptimizationDialog = true
+            }
+        }
+
         setContent {
             BirthdaysNotifierTheme(activity = this@AppActivity) {
                 Surface(modifier = Modifier.fillMaxSize()) {
@@ -109,6 +118,29 @@ class AppActivity : ComponentActivity() {
                             },
                             dismissButton = {
                                 TextButton(onClick = { needsExactAlarmPermissionDialog = false }) {
+                                    Text(stringResource(R.string.cancel))
+                                }
+                            }
+                        )
+                    }
+                    if (needsBatteryOptimizationDialog) {
+                        AlertDialog(
+                            onDismissRequest = { needsBatteryOptimizationDialog = false },
+                            title = { Text(stringResource(R.string.battery_optimization_title)) },
+                            text = { Text(stringResource(R.string.battery_optimization_message)) },
+                            confirmButton = {
+                                TextButton(onClick = {
+                                    needsBatteryOptimizationDialog = false
+                                    val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
+                                        data = Uri.parse("package:${this@AppActivity.packageName}")
+                                    }
+                                    this@AppActivity.startActivity(intent)
+                                }) {
+                                    Text(stringResource(R.string.go_to_settings))
+                                }
+                            },
+                            dismissButton = {
+                                TextButton(onClick = { needsBatteryOptimizationDialog = false }) {
                                     Text(stringResource(R.string.cancel))
                                 }
                             }
