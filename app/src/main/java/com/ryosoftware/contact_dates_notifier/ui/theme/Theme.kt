@@ -10,14 +10,18 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.colorResource
 import com.ryosoftware.contact_dates_notifier.R
 import com.ryosoftware.contact_dates_notifier.data.ApplicationPreferences
+
+val LocalPureBlackBackground = staticCompositionLocalOf { false }
 
 @Composable
 fun BirthdaysNotifierTheme(
@@ -34,6 +38,7 @@ fun BirthdaysNotifierTheme(
     val isDarkTheme =
         themeStyle == ApplicationPreferences.THEME_DARK ||
                 (themeStyle == ApplicationPreferences.THEME_SYSTEM && isSystemInDarkTheme())
+    val isPureBlack = blackBackground && isDarkTheme
 
     var colorScheme: ColorScheme = when {
         isDarkTheme -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) dynamicDarkColorScheme(activity) else darkColorScheme()
@@ -56,7 +61,7 @@ fun BirthdaysNotifierTheme(
         )
     }
 
-    if (blackBackground && isDarkTheme) {
+    if (isPureBlack) {
         colorScheme = colorScheme.copy(
             background = Color.Black,
             surface = Color.Black,
@@ -84,7 +89,9 @@ fun BirthdaysNotifierTheme(
         )
     }
 
-    MaterialTheme(colorScheme = colorScheme) {
-        content()
+    CompositionLocalProvider(LocalPureBlackBackground provides isPureBlack) {
+        MaterialTheme(colorScheme = colorScheme) {
+            content()
+        }
     }
 }

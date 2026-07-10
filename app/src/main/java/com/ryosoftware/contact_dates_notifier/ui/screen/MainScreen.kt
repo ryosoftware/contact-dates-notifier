@@ -1,6 +1,7 @@
 package com.ryosoftware.contact_dates_notifier.ui.screen
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -48,6 +49,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.ryosoftware.contact_dates_notifier.data.ApplicationPreferences
+import com.ryosoftware.contact_dates_notifier.ui.theme.LocalPureBlackBackground
 import com.ryosoftware.contact_dates_notifier.data.model.ApplicationContact
 import com.ryosoftware.contact_dates_notifier.data.model.Contact
 import com.ryosoftware.contact_dates_notifier.data.model.DeviceContact
@@ -470,6 +472,8 @@ private fun ContactItem(
     val isNearFuture = days in 0..nearFutureDays
     val showLargePhoto = if (isNearFuture) showLargeNear else showLargeNoNear
 
+    val isPureBlack = LocalPureBlackBackground.current
+
     Box {
         Card(
             modifier = Modifier
@@ -481,7 +485,8 @@ private fun ContactItem(
                     onLongClick = onClick
                 ),
             shape = RoundedCornerShape(8.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+            elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+            border = if (isPureBlack) BorderStroke(1.dp, Color(0xFF444444)) else null
         ) {
             Column {
                 if (showLargePhoto) {

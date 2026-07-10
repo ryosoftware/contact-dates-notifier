@@ -1,6 +1,7 @@
 package com.ryosoftware.contact_dates_notifier.ui.screen
 
 import android.content.Context
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -52,6 +53,7 @@ import com.ryosoftware.contact_dates_notifier.data.ApplicationPreferences
 import com.ryosoftware.contact_dates_notifier.data.DeviceContactsDriver
 import com.ryosoftware.contact_dates_notifier.data.model.ApplicationContact
 import com.ryosoftware.contact_dates_notifier.data.model.Contact
+import com.ryosoftware.contact_dates_notifier.ui.theme.LocalPureBlackBackground
 import com.ryosoftware.utilities.DateTimeUtilities
 
 private data class DisabledEventInfo(
@@ -192,8 +194,10 @@ private fun DisabledContactCard(
     onRemove: () -> Unit
 ) {
     val context = LocalContext.current
+    val isPureBlack = LocalPureBlackBackground.current
     Card(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        border = if (isPureBlack) BorderStroke(1.dp, Color(0xFF444444)) else null
     ) {
         Row(
             modifier = Modifier
@@ -280,8 +284,10 @@ private fun DisabledEventCard(
         else
             DateTimeUtilities.getDateStringWithoutYear(formatStyle, year, month, day)
     }
+    val isPureBlack = LocalPureBlackBackground.current
     Card(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        border = if (isPureBlack) BorderStroke(1.dp, Color(0xFF444444)) else null
     ) {
         Row(
             modifier = Modifier
